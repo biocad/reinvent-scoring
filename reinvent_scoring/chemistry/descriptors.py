@@ -32,7 +32,8 @@ class Descriptors:
         descriptor_list = dict(ecfp=self.molecules_to_fingerprints,
                                ecfp_counts=self.molecules_to_count_fingerprints,
                                maccs_keys=self.maccs_keys,
-                               avalon=self.avalon)
+                               avalon=self.avalon,
+                               rdk_fingerprint=self.rdk_fingerprint)
         return descriptor_list
 
     def maccs_keys(self, molecules: List[Mol], parameters: {}):
@@ -86,6 +87,28 @@ class Descriptors:
             )
             for mol in molecules
         ]
+        fingerprints = [self._numpy_fingerprint(fp, dtype=np.int32) for fp in fps]
+        return fingerprints
+
+    def rdk_fingerprint(self, molecules: List[Mol], parameters: Dict) -> List[
+        np.ndarray]:
+        """RDKFingerprint from RDKit."""
+        # fullfill missing params
+        method_params = {
+            "fpSize": parameters.get("size", 2048),
+            "minPath": parameters.get("minPath", 1),
+            "maxPath": parameters.get("minPath", 7),
+            "nBitsPerHash": parameters.get("nBitsPerHash", 2),
+            "useHs": parameters.get("useHs", True),
+            "tgtDensity": parameters.get("useHs", 0.0),
+            "minSize": parameters.get("minSize", 128),
+            "branchedPaths": parameters.get("branchedPaths", True),
+            "useBondOrder": parameters.get("useBondOrder", True),
+            "atomInvariants": parameters.get("atomInvariants", 0),
+            "fromAtoms": parameters.get("fromAtoms", 0),
+            "atomBits": parameters.get("atomBits", None),
+            "bitInfo": parameters.get("bitInfo", None)}
+        fps = [RDKFingerprint(mol, **method_params) for mol in molecules]
         fingerprints = [self._numpy_fingerprint(fp, dtype=np.int32) for fp in fps]
         return fingerprints
 

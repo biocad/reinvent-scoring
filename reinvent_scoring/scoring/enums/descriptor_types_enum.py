@@ -3,6 +3,7 @@ class DescriptorTypesEnum():
     _ECFP_COUNTS = "ecfp_counts"
     _MACCS_KEYS = "maccs_keys"
     _AVALON = "avalon"
+    _RDK_FINGERPRINT = "rdk_fingerprint"
 
     @property
     def ECFP(self):
@@ -34,4 +35,12 @@ class DescriptorTypesEnum():
 
     @AVALON.setter
     def AVALON(self, value):
+        raise ValueError("Do not assign value to a DescriptorTypesEnum field")
+
+    @property
+    def RDK_FINGERPRINT(self):
+        return self._RDK_FINGERPRINT
+
+    @RDK_FINGERPRINT.setter
+    def RDK_FINGERPRINT(self, value):
         raise ValueError("Do not assign value to a DescriptorTypesEnum field")
