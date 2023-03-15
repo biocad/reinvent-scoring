@@ -3,7 +3,7 @@ from typing import List, Dict
 import numpy as np
 from rdkit import DataStructs
 from rdkit.Avalon import pyAvalonTools
-from rdkit.Chem import AllChem, MACCSkeys, Mol
+from rdkit.Chem import AllChem, MACCSkeys, Mol, RDKFingerprint
 from rdkit.Chem.rdMolDescriptors import GetHashedMorganFingerprint
 
 from reinvent_scoring.scoring.enums import ComponentSpecificParametersEnum
