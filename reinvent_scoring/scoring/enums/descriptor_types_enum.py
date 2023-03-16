@@ -44,3 +44,4 @@ class DescriptorTypesEnum():
     @RDK_FINGERPRINT.setter
     def RDK_FINGERPRINT(self, value):
         raise ValueError("Do not assign value to a DescriptorTypesEnum field")
+    
